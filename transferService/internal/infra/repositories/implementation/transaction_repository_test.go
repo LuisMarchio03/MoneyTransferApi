@@ -14,7 +14,7 @@ type MockUser struct {
 	Email    string
 	Password string
 	Balance  float64
-	Cpf_Cnpj int64
+	cpfCnpj  string
 	Type     string
 }
 
@@ -27,7 +27,7 @@ type TransactionRepositoryTestSuite struct {
 func (suite *TransactionRepositoryTestSuite) SetupSuite() {
 	db, err := sql.Open("sqlite3", ":memory:")
 	suite.NoError(err)
-	db.Exec("CREATE TABLE users (id varchar(255) NOT NULL, name varchar(255) NOT NULL, email varchar(255) NOT NULL, password varchar(255) NOT NULL, balance float NOT NULL, cpf_cnpj int NOT NULL, type varchar(255) NOT NULL, PRIMARY KEY (id), UNIQUE (email), UNIQUE (cpf_cnpj))")
+	db.Exec("CREATE TABLE users (id varchar(255) NOT NULL, name varchar(255) NOT NULL, email varchar(255) NOT NULL, password varchar(255) NOT NULL, balance float NOT NULL, cpfCnpj varchar(255) NOT NULL, type varchar(255) NOT NULL, PRIMARY KEY (id), UNIQUE (email), UNIQUE (cpfCnpj))")
 	db.Exec("CREATE TABLE transactions (id varchar(255) NOT NULL, value float NOT NULL, payer varchar(255) NOT NULL, payee varchar(255) NOT NULL, PRIMARY KEY (id))")
 	suite.Db = db
 }
@@ -48,7 +48,7 @@ func (suite *TransactionRepositoryTestSuite) TestTransferMoney() {
 		Email:    "mock@email.com",
 		Password: "mock123",
 		Balance:  1200.0,
-		Cpf_Cnpj: 00000000000,
+		cpfCnpj:  "00000000000",
 		Type:     "common",
 	}
 
@@ -58,7 +58,7 @@ func (suite *TransactionRepositoryTestSuite) TestTransferMoney() {
 		Email:    "mockShopkeepers@email.com",
 		Password: "mockShopkeepers123",
 		Balance:  15000.0,
-		Cpf_Cnpj: 11111111111,
+		cpfCnpj:  "11111111111",
 		Type:     "shopkeeper",
 	}
 

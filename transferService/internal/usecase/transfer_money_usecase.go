@@ -13,7 +13,7 @@ type MockUser struct {
 	Email    string
 	Password string
 	Balance  float64
-	Cpf_Cnpj int64
+	cpfCnpj  string
 	Type     string
 }
 

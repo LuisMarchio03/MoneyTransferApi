@@ -18,7 +18,7 @@ type TransferMoneyUsecaseTestSuite struct {
 func (suite *TransferMoneyUsecaseTestSuite) SetupSuite() {
 	db, err := sql.Open("sqlite3", ":memory:")
 	suite.NoError(err)
-	db.Exec("CREATE TABLE users (id varchar(255) NOT NULL, name varchar(255) NOT NULL, email varchar(255) NOT NULL, password varchar(255) NOT NULL, balance float NOT NULL, cpf_cnpj int NOT NULL, type varchar(255) NOT NULL, PRIMARY KEY (id), UNIQUE (email), UNIQUE (cpf_cnpj))")
+	db.Exec("CREATE TABLE users (id varchar(255) NOT NULL, name varchar(255) NOT NULL, email varchar(255) NOT NULL, password varchar(255) NOT NULL, balance float NOT NULL, cpfCnpj varchar(255) NOT NULL, type varchar(255) NOT NULL, PRIMARY KEY (id), UNIQUE (email), UNIQUE (cpfCnpj))")
 	db.Exec("CREATE TABLE transactions (id varchar(255) NOT NULL, value float NOT NULL, payer varchar(255) NOT NULL, payee varchar(255) NOT NULL, PRIMARY KEY (id))")
 	suite.Db = db
 	suite.respository = *implementation.NewTransactionRepository(db)
@@ -39,7 +39,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseSuccess() {
 		Email:    "senderEmail@email.com",
 		Password: "senderPassword",
 		Balance:  1000,
-		Cpf_Cnpj: 123456789,
+		cpfCnpj:  "123456789",
 		Type:     "common",
 	}
 
@@ -49,7 +49,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseSuccess() {
 		Email:    "receiverEmail@email.com",
 		Password: "receiverPassword",
 		Balance:  100,
-		Cpf_Cnpj: 123456789,
+		cpfCnpj:  "123456789",
 		Type:     "shopkeeper",
 	}
 
@@ -72,7 +72,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorShopkee
 		Email:    "senderEmail@email.com",
 		Password: "senderPassword",
 		Balance:  1000,
-		Cpf_Cnpj: 123456789,
+		cpfCnpj:  "123456789",
 		Type:     "shopkeeper",
 	}
 
@@ -82,7 +82,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorShopkee
 		Email:    "receiverEmail@email.com",
 		Password: "receiverPassword",
 		Balance:  100,
-		Cpf_Cnpj: 123456789,
+		cpfCnpj:  "123456789",
 		Type:     "common",
 	}
 
@@ -105,7 +105,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorInsuffi
 		Email:    "senderEmail@email.com",
 		Password: "senderPassword",
 		Balance:  1000,
-		Cpf_Cnpj: 123456789,
+		cpfCnpj:  "123456789",
 		Type:     "common",
 	}
 
@@ -115,7 +115,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorInsuffi
 		Email:    "receiverEmail@email.com",
 		Password: "receiverPassword",
 		Balance:  100,
-		Cpf_Cnpj: 123456789,
+		cpfCnpj:  "123456789",
 		Type:     "shopkeeper",
 	}
 
