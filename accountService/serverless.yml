@@ -8,11 +8,15 @@ provider:
 
 functions:
   create-user:
-    handler: src/create-user.handler
+    handler: src/modules/user/lambdas/create-user.handler
     events:
       - httpApi:
           path: /users
           method: post
+
+custom:
+  serverless-offline:
+    httpPort: 4000
           
 plugins:
   - serverless-plugin-typescript
