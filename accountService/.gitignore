@@ -3,3 +3,6 @@ node_modules
 .env
 volume
 coverage
+localstack
+dynamodb_data
+data
