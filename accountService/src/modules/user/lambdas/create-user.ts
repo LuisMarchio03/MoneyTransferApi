@@ -1,42 +1,20 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { CreateUserUseCase } from '../usecases/create-user.usecase';
 import { UserRepository } from '../repositories/implementation/user-repository';
-import { UserEntity } from '../entities/user.entity';
+import { SendMessage } from '../providers/create-user.producer';
+import { RabbitMQConnection } from '../../shared/providers/amqp';
+import { HttpRequestInterface } from '../protocols/http/httpRequest.interface';
+import { httpResponse } from '../helpers/http/httpResponse';
+import { badRequest } from '../helpers/http/badRequest';
 
-// class MinhaLambdaFunction {
-//   private nome: string;
+export class CreateUserLambda {
+  constructor(
+    private readonly usecase: CreateUserUseCase,
+    private readonly producer: SendMessage
+  ) {}
 
-//   constructor() {
-//     this.nome = "MinhaLambdaFunction";
-//   }
-
-//   run(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
-//     return Promise.resolve({
-//       statusCode: 200,
-//       body: JSON.stringify("Hello World"),
-//     });
-//   }
-// }
-
-// export const handler = async(event: APIGatewayProxyEvent) => {
-//   const minhaLambdaFunction = new MinhaLambdaFunction();
-//   return await minhaLambdaFunction.run(event);
-// }
-
-type CreateUserUseCaseRequest = {
-  name: string;
-  email: string;
-  password: string;
-  balance: number;
-  cpfCnpj: string;
-  type: 'common' | 'shopkeeper';
-  createdAt: Date;
-}
-
-class CreateUserLambda {
   async run(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
     try {
-      console.log("teste");
       const { 
         name,
         email,
@@ -44,38 +22,30 @@ class CreateUserLambda {
         balance,
         cpfCnpj,
         type,
-      }: CreateUserUseCaseRequest  = JSON.parse(event.body!);
+      }: HttpRequestInterface  = JSON.parse(event.body!);
 
-      const repository = new UserRepository();
-      const usecase = new CreateUserUseCase(repository);
-
-      await usecase.execute({
+      const user = await this.usecase.execute({
         name,
         email,
         password,
         balance,
         cpfCnpj,
         type,
-        createdAt: new Date(),
       });
+      await this.producer.execute(JSON.stringify(user));
 
-      return Promise.resolve({
-        statusCode: 200,
-        body: JSON.stringify({
-          message: "User created successfully",
-        }),
-      });
+      return httpResponse({ message: "User created successfully", user })
     } catch (err) {
-      console.log("Erro: ", err);
-      return Promise.resolve({
-        statusCode: 400,
-        body: JSON.stringify(err),
-      });
+      return badRequest(err)
     }
   }
 }
 
 export const handler = async(event: APIGatewayProxyEvent) => {
-  const lambdaFunction = new CreateUserLambda();
+  const repository = new UserRepository();
+  const usecase = new CreateUserUseCase(repository);
+  const producer = new SendMessage(new RabbitMQConnection());
+
+  const lambdaFunction = new CreateUserLambda(usecase, producer);
   return await lambdaFunction.run(event);
 }
