@@ -1,20 +1,9 @@
-interface IUser {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  balance: number;
-  cpfCnpj: string;
-  type: 'common' | 'shopkeeper';
-  createdAt: Date;
-  updatedAt: Date | null;
-  deletedAt: Date | null;
-} 
+import { User } from "./user.interface";
 
 export class UserEntity {
-  private props: IUser;
+  private props: User;
 
-  get id(): number {
+  get id(): string {
     return this.props.id;
   }
 
@@ -54,8 +43,8 @@ export class UserEntity {
     return this.props.deletedAt;
   }
 
-  public static isValid(props: IUser) {
-    if (!props.id || props.id < 0) {
+  public static isValid(props: User) {
+    if (!props.id || typeof props.id !== 'string') {
       throw new Error('Invalid ID');
     }
     
@@ -90,9 +79,13 @@ export class UserEntity {
     if (props.updatedAt && props.updatedAt < props.createdAt) {
       throw new Error('Invalid updated at');
     }
+
+    if (props.deletedAt && props.deletedAt < props.createdAt) {
+      throw new Error('Invalid deleted at');
+    }
   }
 
-  constructor(props: IUser) {
+  constructor(props: User) {
     UserEntity.isValid(props);
     this.props = props;
   }
