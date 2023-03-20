@@ -4,7 +4,6 @@ import { InMemoryUserRepository } from '../repositories/in-memory/in-memory-user
 import { UserRepositoryInterface } from '../repositories/user-repository-interface';
 import { CreateUserUseCase } from './create-user.usecase';
 
-
 let sut: CreateUserUseCase
 let repository: UserRepositoryInterface 
 
@@ -22,7 +21,6 @@ describe('CreateUserUseCase', () => {
       balance: 0,
       cpfCnpj: '12345678910',
       type: 'common',
-      createdAt: new Date(),
     })
     
     expect(sut).toBeInstanceOf(CreateUserUseCase);
@@ -38,7 +36,6 @@ describe('CreateUserUseCase', () => {
       balance: 0,
       cpfCnpj: '22233322265',
       type: 'common',
-      createdAt: new Date(),
       password: '123456',
     })
 
@@ -48,7 +45,6 @@ describe('CreateUserUseCase', () => {
       balance: 100,
       cpfCnpj: '22266622265',
       type: 'common',
-      createdAt: new Date(),
       password: '123456',
      })).rejects.toThrowError('User already exists')
 
@@ -59,8 +55,6 @@ describe('CreateUserUseCase', () => {
       balance: 0,
       cpfCnpj: '22233322265',
       type: 'common',
-      createdAt: new Date(),
     })).rejects.toBeInstanceOf(Error)
   })
-
 })
