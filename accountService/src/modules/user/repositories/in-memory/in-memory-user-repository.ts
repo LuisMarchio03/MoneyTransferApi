@@ -1,16 +1,6 @@
 import { UserEntity } from '../../entities/user.entity';
 import { UserRepositoryInterface } from '../user-repository-interface'
 
-type ISaveUser = {
-  name: string;
-  email: string;
-  password: string;
-  balance: number;
-  cpfCnpj: string;
-  type: 'common' | 'shopkeeper';
-  createdAt: Date;
-}
-
 export class InMemoryUserRepository implements UserRepositoryInterface {
   public user: UserEntity[] = []
 
