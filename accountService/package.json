@@ -7,8 +7,9 @@
     "dev": "npx serverless offline",
     "predeploy": "npx prisma generate",
     "deploy": "npx serverless deploy --verbose",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "migrate:postgres:test": "dotenv -e .env.test -- npx prisma migrate deploy",
+    "test": "dotenv -e .env.test vitest"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,7 @@
     "@types/amqplib": "^0.10.1",
     "amqplib": "^0.10.3",
     "aws-sdk": "^2.1333.0",
+    "dotenv": "^16.0.3",
     "mongodb": "^5.1.0",
     "supertest": "^6.3.3"
   }
