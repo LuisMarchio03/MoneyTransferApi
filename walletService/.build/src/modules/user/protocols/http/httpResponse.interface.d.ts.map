@@ -1,0 +1,1 @@
+{"version":3,"file":"httpResponse.interface.d.ts","sourceRoot":"","sources":["../../../../../../src/modules/user/protocols/http/httpResponse.interface.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,IAAI,EAAE,MAAM,+BAA+B,CAAC;AAErD,MAAM,MAAM,qBAAqB,GAAG;IAClC,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,IAAI,CAAC,EAAE,OAAO,CAAC,IAAI,CAAC,CAAC;IACrB,IAAI,CAAC,EAAE,MAAM,CAAC;CACf,CAAA"}

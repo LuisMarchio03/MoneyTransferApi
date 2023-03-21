@@ -9,7 +9,7 @@ export class RabbitMQConnection {
   
   async connect(): Promise<void> {
     try {
-      this.connection = await amqp.connect("amqp://guest:guest@localhost:5672/");
+      this.connection = await amqp.connect(`${process.env.RABBITMQ_URL}`);
     } catch (error) {
       throw new Error('Error connecting to RabbitMQ');
     }

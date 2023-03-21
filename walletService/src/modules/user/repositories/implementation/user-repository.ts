@@ -65,4 +65,28 @@ export class UserRepository implements UserRepositoryInterface {
     })
     return user
   }
+
+  async findWalletByUserId(id: string): Promise<UserEntity | null> {
+    const walletUser = await prisma.user.findFirst({
+      where: {  
+        id
+      }
+    })
+    if (!walletUser) {
+      return null
+    }
+    const user = new UserEntity({
+      id: walletUser.id,
+      name: walletUser.name,
+      email: walletUser.email,
+      cpfCnpj: walletUser.cpfCnpj,
+      password: walletUser.password,
+      balance: walletUser.balance,
+      type: walletUser.type as 'common' | 'shopkeeper',
+      createdAt: walletUser.createdAt,
+      deletedAt: walletUser.deletedAt,
+      updatedAt: walletUser.updatedAt,
+    })
+    return user
+  }
 }

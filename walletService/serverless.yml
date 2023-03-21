@@ -13,6 +13,12 @@ functions:
       - httpApi:
           path: /users
           method: post
+  wallet-get:
+    handler: src/modules/user/lambdas/get-wallet.handler
+    events:
+      - httpApi:
+          path: /users/{id}/wallet
+          method: get
 
 custom:
   serverless-offline:

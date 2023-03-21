@@ -23,4 +23,12 @@ export class InMemoryUserRepository implements UserRepositoryInterface {
     }
     return user
   }
+
+  async findWalletByUserId(id: string): Promise<UserEntity | null> {
+    const walletUser = this.user.find(item => item.id === id)
+    if (!walletUser) {
+      return null
+    }
+    return walletUser
+  }
 }

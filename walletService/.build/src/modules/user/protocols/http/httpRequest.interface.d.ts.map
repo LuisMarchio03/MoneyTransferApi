@@ -1,0 +1,1 @@
+{"version":3,"file":"httpRequest.interface.d.ts","sourceRoot":"","sources":["../../../../../../src/modules/user/protocols/http/httpRequest.interface.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,oBAAoB,GAAG;IACjC,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;IACd,QAAQ,EAAE,MAAM,CAAC;IACjB,OAAO,EAAE,MAAM,CAAC;IAChB,OAAO,EAAE,MAAM,CAAC;IAChB,IAAI,EAAE,QAAQ,GAAG,YAAY,CAAC;CAC/B,CAAA"}

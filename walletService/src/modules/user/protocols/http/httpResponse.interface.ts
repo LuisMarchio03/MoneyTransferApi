@@ -2,6 +2,6 @@ import { User } from '../../entities/user.interface';
 
 export type HttpResponseInterface = {
   message?: string;
-  user?: User;
+  user?: Partial<User>;
   body?: string;
 }

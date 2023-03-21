@@ -50,6 +50,13 @@ describe('User Repository', () => {
     expect(res?.id).toBe(user.id)
   })
 
+  it('should be able to find a wallet user by userId', async () => {
+    const res = await userRepository.findWalletByUserId(user.id)
+    expect(userRepository).toBeInstanceOf(UserRepository);
+    expect(userRepository).toHaveProperty('findWalletByUserId');
+    expect(res?.id).toBe(user.id)
+  })
+
   it('should not be able to find a user by email', async () => {
     const res = await userRepository.findEmail('luis@mail.com')
     expect(res).toBe(null)
