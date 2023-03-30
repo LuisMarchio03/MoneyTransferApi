@@ -1,3 +1,5 @@
-Nodejs -> walletService -> wallet dos clientes
+# Finish app
 
-GoLang -> tranferService -> transferência
+**[] TransferService -> consumer rabbitMQ**
+**[] TransferService -> cancelamento de transferências**
+**[] SendMessageService -> Create service to send message**
