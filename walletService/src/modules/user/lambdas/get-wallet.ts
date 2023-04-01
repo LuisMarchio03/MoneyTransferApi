@@ -29,7 +29,6 @@ export class GetWalletLambda {
         createdAt: user.createdAt,
       } })
     } catch (err) {
-      console.log(err);
       return badRequest(err)
     }
   }

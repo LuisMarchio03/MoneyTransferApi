@@ -36,7 +36,6 @@ export class CreateUserLambda {
 
       return httpResponse({ message: "User created successfully", user })
     } catch (err) {
-      console.log(err);
       return badRequest(err)
     }
   }
