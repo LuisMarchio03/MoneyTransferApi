@@ -28,7 +28,7 @@ func (suite *TransactionRepositoryTestSuite) SetupSuite() {
 	db, err := sql.Open("sqlite3", ":memory:")
 	suite.NoError(err)
 	db.Exec("CREATE TABLE users (id varchar(255) NOT NULL, name varchar(255) NOT NULL, email varchar(255) NOT NULL, password varchar(255), balance float NOT NULL, cpfCnpj varchar(255) NOT NULL, type varchar(255) NOT NULL, PRIMARY KEY (id), UNIQUE (email), UNIQUE (cpfCnpj))")
-	db.Exec("CREATE TABLE transactions (id varchar(255) NOT NULL, value float NOT NULL, payer varchar(255) NOT NULL, payee varchar(255) NOT NULL, PRIMARY KEY (id))")
+	db.Exec("CREATE TABLE transactions (id varchar(255) NOT NULL, value float NOT NULL, payer varchar(255) NOT NULL, payee varchar(255) NOT NULL, isCanceled boolean NOT NULL, PRIMARY KEY (id))")
 	suite.Db = db
 }
 
@@ -41,34 +41,68 @@ func TestSuite(t *testing.T) {
 	suite.Run(t, new(TransactionRepositoryTestSuite))
 }
 
-func (suite *TransactionRepositoryTestSuite) TestTransferMoney() {
-	mockUserSender := &MockUser{
-		ID:       "123",
-		Name:     "mock",
-		Email:    "mock@email.com",
-		Password: "mock123",
-		Balance:  1200.0,
-		cpfCnpj:  "00000000000",
-		Type:     "common",
-	}
+func (suite *TransactionRepositoryTestSuite) TestTransfer() {
+	suite.Run("Should transfer money", func() {
+		mockUserSender := &MockUser{
+			ID:       "123",
+			Name:     "mock",
+			Email:    "mock@email.com",
+			Password: "mock123",
+			Balance:  1200.0,
+			cpfCnpj:  "00000000000",
+			Type:     "common",
+		}
 
-	mockUserReceiver := &MockUser{
-		ID:       "456",
-		Name:     "mockShopkeepers",
-		Email:    "mockShopkeepers@email.com",
-		Password: "mockShopkeepers123",
-		Balance:  15000.0,
-		cpfCnpj:  "11111111111",
-		Type:     "shopkeeper",
-	}
+		mockUserReceiver := &MockUser{
+			ID:       "456",
+			Name:     "mockShopkeepers",
+			Email:    "mockShopkeepers@email.com",
+			Password: "mockShopkeepers123",
+			Balance:  15000.0,
+			cpfCnpj:  "11111111111",
+			Type:     "shopkeeper",
+		}
 
-	mockValue := 200.0
+		mockValue := 200.0
 
-	repo := NewTransactionRepository(suite.Db)
-	err := repo.TransferMoney(
-		mockUserSender.ID,
-		mockUserReceiver.ID,
-		mockValue,
-	)
-	suite.NoError(err)
+		repo := NewTransactionRepository(suite.Db)
+		err := repo.TransferMoney(
+			mockUserSender.ID,
+			mockUserReceiver.ID,
+			mockValue,
+		)
+		suite.NoError(err)
+	})
+
+	suite.Run("Should cancel transfer money", func() {
+		mockUserSender := &MockUser{
+			ID:       "123",
+			Name:     "mock2",
+			Email:    "mock2@mail.com",
+			cpfCnpj:  "00000000000",
+			Password: "mock123",
+			Balance:  1200.0,
+			Type:     "common",
+		}
+
+		mockUserReceiver := &MockUser{
+			ID:       "456",
+			Name:     "mockShopkeepers2",
+			Email:    "mockShopkeepers2@mail.com",
+			cpfCnpj:  "11111111111",
+			Password: "mockShopkeepers123",
+			Balance:  15000.0,
+			Type:     "shopkeeper",
+		}
+
+		mockValue := 200.0
+
+		repo := NewTransactionRepository(suite.Db)
+		err := repo.CancelTransferMoney(
+			mockUserSender.ID,
+			mockUserReceiver.ID,
+			mockValue,
+		)
+		suite.NoError(err)
+	})
 }

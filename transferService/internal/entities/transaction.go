@@ -5,18 +5,20 @@ import (
 )
 
 type Transaction struct {
-	ID    string  `json:"id"`
-	Value float64 `json:"value"`
-	Payer int     `json:"payer"`
-	Payee int     `json:"payee"`
+	ID         string  `json:"id"`
+	Value      float64 `json:"value"`
+	Payer      int     `json:"payer"`
+	Payee      int     `json:"payee"`
+	IsCanceled bool    `json:"isCanceled"`
 }
 
-func NewTransaction(id string, value float64, payer int, payee int) *Transaction {
+func NewTransaction(id string, value float64, payer int, payee int, isCanceled bool) *Transaction {
 	return &Transaction{
-		ID:    id,
-		Value: value,
-		Payer: payer,
-		Payee: payee,
+		ID:         id,
+		Value:      value,
+		Payer:      payer,
+		Payee:      payee,
+		IsCanceled: isCanceled,
 	}
 }
 
