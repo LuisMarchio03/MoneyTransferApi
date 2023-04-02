@@ -75,7 +75,7 @@ func main() {
 	handlers := web.NewTransactionHandlers(transactionUsecase)
 
 	r := chi.NewRouter()
-	r.Post("/v1/transaction", handlers.TransferMoneyHandler)
+	r.Post("/transaction", handlers.TransferMoneyHandler)
 
 	http.ListenAndServe(":4001", r)
 }
