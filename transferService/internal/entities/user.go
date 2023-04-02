@@ -9,7 +9,7 @@ type User struct {
 	Name    string  `json:"name"`
 	Email   string  `json:"email"`
 	Balance float64 `json:"balance"`
-	cpfCnpj string  `json:"cpfCnpj"`
+	CpfCnpj string  `json:"cpfCnpj"`
 	Type    string  `json:"type"`
 }
 
@@ -27,7 +27,7 @@ func NewUser(
 		Name:    name,
 		Email:   email,
 		Balance: balance,
-		cpfCnpj: cpfCnpj,
+		CpfCnpj: cpfCnpj,
 		Type:    _type,
 	}
 }
@@ -45,7 +45,7 @@ func (t *User) isValid() error {
 	if t.Balance < 0 {
 		return errors.New("balance must be greater than zero")
 	}
-	if t.cpfCnpj == "" {
+	if t.CpfCnpj == "" {
 		return errors.New("cpfCnpj is required")
 	}
 	if t.Type == "" {

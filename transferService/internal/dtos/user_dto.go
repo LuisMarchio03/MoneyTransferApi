@@ -5,6 +5,6 @@ type UserDTO struct {
 	Name    string
 	Email   string
 	Balance float64
-	cpfCnpj string
+	CpfCnpj string
 	Type    string
 }
