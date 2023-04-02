@@ -28,7 +28,6 @@ class GetWalletLambda {
                 } });
         }
         catch (err) {
-            console.log(err);
             return (0, badRequest_1.badRequest)(err);
         }
     }

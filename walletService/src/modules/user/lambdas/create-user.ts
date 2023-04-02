@@ -32,7 +32,13 @@ export class CreateUserLambda {
         cpfCnpj,
         type,
       });
-      await this.producer.execute(JSON.stringify(user));
+      await this.producer.execute(JSON.stringify({
+        name,
+        email,
+        balance,
+        cpfCnpj,
+        type,
+      }));
 
       return httpResponse({ message: "User created successfully", user })
     } catch (err) {
