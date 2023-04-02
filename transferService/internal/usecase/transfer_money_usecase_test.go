@@ -39,7 +39,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseSuccess() {
 		Email:    "senderEmail@email.com",
 		Password: "senderPassword",
 		Balance:  1000,
-		cpfCnpj:  "123456789",
+		CpfCnpj:  "123456789",
 		Type:     "common",
 	}
 
@@ -49,7 +49,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseSuccess() {
 		Email:    "receiverEmail@email.com",
 		Password: "receiverPassword",
 		Balance:  100,
-		cpfCnpj:  "123456789",
+		CpfCnpj:  "123456789",
 		Type:     "shopkeeper",
 	}
 
@@ -72,7 +72,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorShopkee
 		Email:    "senderEmail@email.com",
 		Password: "senderPassword",
 		Balance:  1000,
-		cpfCnpj:  "123456789",
+		CpfCnpj:  "123456789",
 		Type:     "shopkeeper",
 	}
 
@@ -82,7 +82,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorShopkee
 		Email:    "receiverEmail@email.com",
 		Password: "receiverPassword",
 		Balance:  100,
-		cpfCnpj:  "123456789",
+		CpfCnpj:  "123456789",
 		Type:     "common",
 	}
 
@@ -105,7 +105,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorInsuffi
 		Email:    "senderEmail@email.com",
 		Password: "senderPassword",
 		Balance:  1000,
-		cpfCnpj:  "123456789",
+		CpfCnpj:  "123456789",
 		Type:     "common",
 	}
 
@@ -115,7 +115,7 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorInsuffi
 		Email:    "receiverEmail@email.com",
 		Password: "receiverPassword",
 		Balance:  100,
-		cpfCnpj:  "123456789",
+		CpfCnpj:  "123456789",
 		Type:     "shopkeeper",
 	}
 

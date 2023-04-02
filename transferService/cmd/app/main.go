@@ -10,9 +10,11 @@ import (
 	"github.com/luismarchio/transaction-api/internal/dtos"
 	"github.com/luismarchio/transaction-api/internal/entities"
 	implementation "github.com/luismarchio/transaction-api/internal/infra/repositories/implementation"
-	"github.com/luismarchio/transaction-api/internal/usecase"
+	uc "github.com/luismarchio/transaction-api/internal/usecase"
 	"github.com/luismarchio/transaction-api/pkg/rabbitmq"
 	_ "github.com/mattn/go-sqlite3"
+
+	"github.com/luismarchio/transaction-api/internal/infra/web"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -30,7 +32,9 @@ func main() {
 	// }
 
 	repository := implementation.NewUserRepository(db)
-	usecase := usecase.NewSaveUserUsecase(*repository)
+	transactionRepository := implementation.NewTransactionRepository(db)
+	usecase := uc.NewSaveUserUsecase(*repository)
+	transactionUsecase := uc.NewTransferMoneyUsecase(*transactionRepository)
 
 	ch, err := rabbitmq.OpenChannel()
 	if err != nil {
@@ -68,6 +72,10 @@ func main() {
 		}()
 	}
 
+	handlers := web.NewTransactionHandlers(transactionUsecase)
+
 	r := chi.NewRouter()
-	http.ListenAndServe(":8081", r)
+	r.Post("/v1/transaction", handlers.TransferMoneyHandler)
+
+	http.ListenAndServe(":4001", r)
 }
