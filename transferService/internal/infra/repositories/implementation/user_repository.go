@@ -16,7 +16,7 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 }
 
 func (r *UserRepository) Save(user *entities.User) error {
-	stmt, err := r.Db.Prepare("INSERT INTO users (id, name, balance, email, type, cpf_cnpj) VALUES ($1, $2, $3, $4, $5, $6)")
+	stmt, err := r.Db.Prepare("INSERT INTO users (id, name, balance, email, type, cpfCnpj) VALUES ($1, $2, $3, $4, $5, $6)")
 	if err != nil {
 		return err
 	}
