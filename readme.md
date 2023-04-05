@@ -6,3 +6,4 @@
 **[] TransferService -> remove mockUser**
 **[] TransferService -> handlers**
 **[] SendMessageService -> Create service to send message**
+**[] All -> Variables to .env**

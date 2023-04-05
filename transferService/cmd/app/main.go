@@ -35,6 +35,7 @@ func main() {
 	transactionRepository := implementation.NewTransactionRepository(db)
 	usecase := uc.NewSaveUserUsecase(*repository)
 	transactionUsecase := uc.NewTransferMoneyUsecase(*transactionRepository)
+	cancelTransferMoneyUsecase := uc.NewCancelTransferMoneyUsecase(*transactionRepository)
 
 	ch, err := rabbitmq.OpenChannel()
 	if err != nil {
@@ -72,10 +73,14 @@ func main() {
 		}()
 	}
 
-	handlers := web.NewTransactionHandlers(transactionUsecase)
+	handlers := web.NewTransactionHandlers(
+		transactionUsecase,
+		cancelTransferMoneyUsecase,
+	)
 
 	r := chi.NewRouter()
 	r.Post("/transaction", handlers.TransferMoneyHandler)
+	r.Post("/transaction/cancel", handlers.CancelTransferMoneyHandler)
 
 	http.ListenAndServe(":4001", r)
 }
