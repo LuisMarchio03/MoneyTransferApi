@@ -2,7 +2,7 @@
 
 **[X] TransferService -> consumer rabbitMQ**
 **[X] TransferService -> cancelamento de transferências**
-**[] TransferService -> cancelamento usecase**
+**[X] TransferService -> cancelamento usecase**
 **[] TransferService -> remove mockUser**
 **[] TransferService -> handlers**
 **[] SendMessageService -> Create service to send message**
