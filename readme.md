@@ -22,6 +22,10 @@ The following functionality has been implemented:
 
 **[X] TransferService -> handlers**
 
+**[] TransferService -> producer update user to WalletService**
+
+**[] WalletService -> consumer rabbitMQ**
+
 **[] SendMessageService -> Create service to send message**
 
 **[] All -> Variables to .env**
@@ -62,6 +66,7 @@ npm run dev
 
 
 The server will be running at http://localhost:8080.
+
 ## Usage
 
 The following endpoints are available:
@@ -71,6 +76,7 @@ The following endpoints are available:
 - `from_account_id, to_account_id, and amount in the request body.
 
 - `POST /transfer/cancel: cancel a transfer. Requires transfer_id in the request body.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://choosealicense.com/licenses/mit/) file for details.
