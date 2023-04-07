@@ -1,6 +1,6 @@
 # Money Transfer API
 
-This is a project for a money transfer API built using Golang. The API allows for transferring money between accounts and also includes the ability to cancel transfers. It also uses RabbitMQ for message queuing.
+This is a project for a money transfer API built using Golang and Nodejs + Servelles framework + AWS Lambda. The API allows for transferring money between accounts and also includes the ability to cancel transfers. It also uses RabbitMQ for message queuing.
 
 
 ## Author
