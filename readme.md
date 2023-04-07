@@ -18,9 +18,9 @@ The following functionality has been implemented:
 
 **[X] TransferService -> cancelamento usecase**
 
-**[] TransferService -> remove mockUser**
+**[X] TransferService -> remove mockUser**
 
-**[] TransferService -> handlers**
+**[X] TransferService -> handlers**
 
 **[] SendMessageService -> Create service to send message**
 
