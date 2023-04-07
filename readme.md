@@ -43,13 +43,21 @@ cd MoneyTransferApi
 Install the dependencies:
 
 ```bash
+cd transferService
 go  mod tidy
+
+cd walletService
+npm install
+
+cd gateway
+npm install
 ```
 
 Run the project:
 
 ```bash
-go run main.go
+cd gateway
+npm run dev
 ```
 
 
