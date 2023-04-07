@@ -18,9 +18,9 @@ The following functionality has been implemented:
 
 **[X] TransferService -> cancelamento usecase**
 
-**[X] TransferService -> remove mockUser**
-
 **[X] TransferService -> handlers**
+
+**[] TransferService -> remove mockUser**
 
 **[] TransferService -> producer update user to WalletService**
 

@@ -5,22 +5,24 @@ import (
 	"net/http"
 
 	"github.com/luismarchio/transaction-api/internal/dtos"
-	"github.com/luismarchio/transaction-api/internal/entities"
 	usecase "github.com/luismarchio/transaction-api/internal/usecase"
 )
 
 type TransactionHandlers struct {
 	TransferMoneyUsecase       *usecase.TransferMoneyUsecase
 	CancelTransferMoneyUsecase *usecase.CancelTransferMoneyUsecase
+	FindUserUsecase            *usecase.FindUserUsecase
 }
 
 func NewTransactionHandlers(
 	transferMoneyUsecase *usecase.TransferMoneyUsecase,
 	cancelTransferMoneyUsecase *usecase.CancelTransferMoneyUsecase,
+	findUserUsecase *usecase.FindUserUsecase,
 ) *TransactionHandlers {
 	return &TransactionHandlers{
 		TransferMoneyUsecase:       transferMoneyUsecase,
 		CancelTransferMoneyUsecase: cancelTransferMoneyUsecase,
+		FindUserUsecase:            findUserUsecase,
 	}
 }
 
@@ -33,30 +35,28 @@ func (h *TransactionHandlers) TransferMoneyHandler(w http.ResponseWriter, r *htt
 		return
 	}
 
-	sender := &entities.User{
-		ID:      "12334",
-		Name:    "senderName3",
-		Email:   "senderEmail3@email.com",
-		Balance: 1000,
-		CpfCnpj: "123456733",
-		Type:    "common",
+	// find user by id
+	sender, err := h.FindUserUsecase.Execute(input.Payer)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
 	}
 
-	receiver := &entities.User{
-		ID:      "45676",
-		Name:    "receiverName2",
-		Email:   "receiverEmail2@email.com",
-		Balance: 100,
-		CpfCnpj: "123456722",
-		Type:    "shopkeeper",
+	// find user by id
+	receiver, err := h.FindUserUsecase.Execute(input.Payee)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
 	}
 
-	mockValue := 200.0
+	value := input.Value
 
 	err = h.TransferMoneyUsecase.Execute(
 		sender,
 		receiver,
-		mockValue,
+		value,
 	)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -77,30 +77,28 @@ func (h *TransactionHandlers) CancelTransferMoneyHandler(w http.ResponseWriter, 
 		return
 	}
 
-	sender := &entities.User{
-		ID:      "12334",
-		Name:    "senderName3",
-		Email:   "senderEmail3@email.com",
-		Balance: 1000,
-		CpfCnpj: "123456733",
-		Type:    "common",
+	// find user by id
+	sender, err := h.FindUserUsecase.Execute(input.Payer)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
 	}
 
-	receiver := &entities.User{
-		ID:      "45676",
-		Name:    "receiverName2",
-		Email:   "receiverEmail2@email.com",
-		Balance: 100,
-		CpfCnpj: "123456722",
-		Type:    "shopkeeper",
+	// find user by id
+	receiver, err := h.FindUserUsecase.Execute(input.Payee)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
 	}
 
-	mockValue := 200.0
+	value := input.Value
 
 	err = h.CancelTransferMoneyUsecase.Execute(
 		sender,
 		receiver,
-		mockValue,
+		value,
 	)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

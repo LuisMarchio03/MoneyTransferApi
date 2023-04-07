@@ -6,4 +6,5 @@ import (
 
 type UserRepositoryInterface interface {
 	Save(user *entities.User) error
+	FindUserById(id string) (*entities.User, error)
 }

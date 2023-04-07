@@ -30,15 +30,33 @@ func TestSuiteUser(t *testing.T) {
 }
 
 func (suite *UserRepositoryTestSuite) TestSave() {
-	userRepository := NewUserRepository(suite.Db)
-	userRepository.Save(
-		&entities.User{
-			ID:      "123",
-			Name:    "mock",
-			Email:   "mock@mail.com",
-			Balance: 1200.0,
-			Type:    "common",
-			CpfCnpj: "00000000000",
-		},
-	)
+	suite.Run("Should save user", func() {
+		userRepository := NewUserRepository(suite.Db)
+		userRepository.Save(
+			&entities.User{
+				ID:      "123",
+				Name:    "mock",
+				Email:   "mock@mail.com",
+				Balance: 1200.0,
+				Type:    "common",
+				CpfCnpj: "00000000000",
+			},
+		)
+	})
+
+	suite.Run("Should find user", func() {
+		userRepository := NewUserRepository(suite.Db)
+		userRepository.Save(
+			&entities.User{
+				ID:      "123432dg",
+				Name:    "mock2",
+				Email:   "mock2@mail.com",
+				Balance: 1200.0,
+				Type:    "common",
+				CpfCnpj: "22233344466",
+			},
+		)
+		_, err := userRepository.FindUserById("123432dg")
+		suite.NoError(err)
+	})
 }

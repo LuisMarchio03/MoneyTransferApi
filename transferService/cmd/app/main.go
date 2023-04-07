@@ -50,6 +50,7 @@ func main() {
 	repository := implementation.NewUserRepository(db)
 	transactionRepository := implementation.NewTransactionRepository(db)
 	usecase := uc.NewSaveUserUsecase(*repository)
+	findUserUsecase := uc.NewFindUserUsecase(*repository)
 	transactionUsecase := uc.NewTransferMoneyUsecase(*transactionRepository)
 	cancelTransferMoneyUsecase := uc.NewCancelTransferMoneyUsecase(*transactionRepository)
 
@@ -96,6 +97,7 @@ func main() {
 	handlers := web.NewTransactionHandlers(
 		transactionUsecase,
 		cancelTransferMoneyUsecase,
+		findUserUsecase,
 	)
 
 	// create router
