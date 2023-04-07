@@ -4,19 +4,10 @@ import (
 	"database/sql"
 	"testing"
 
+	"github.com/luismarchio/transaction-api/internal/entities"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/suite"
 )
-
-type MockUser struct {
-	ID       string
-	Name     string
-	Email    string
-	Password string
-	Balance  float64
-	cpfCnpj  string
-	Type     string
-}
 
 type TransactionRepositoryTestSuite struct {
 	suite.Suite
@@ -43,24 +34,22 @@ func TestSuite(t *testing.T) {
 
 func (suite *TransactionRepositoryTestSuite) TestTransfer() {
 	suite.Run("Should transfer money", func() {
-		mockUserSender := &MockUser{
-			ID:       "123",
-			Name:     "mock",
-			Email:    "mock@email.com",
-			Password: "mock123",
-			Balance:  1200.0,
-			cpfCnpj:  "00000000000",
-			Type:     "common",
+		mockUserSender := &entities.User{
+			ID:      "123",
+			Name:    "mock",
+			Email:   "mock@email.com",
+			Balance: 1200.0,
+			CpfCnpj: "00000000000",
+			Type:    "common",
 		}
 
-		mockUserReceiver := &MockUser{
-			ID:       "456",
-			Name:     "mockShopkeepers",
-			Email:    "mockShopkeepers@email.com",
-			Password: "mockShopkeepers123",
-			Balance:  15000.0,
-			cpfCnpj:  "11111111111",
-			Type:     "shopkeeper",
+		mockUserReceiver := &entities.User{
+			ID:      "456",
+			Name:    "mockShopkeepers",
+			Email:   "mockShopkeepers@email.com",
+			Balance: 15000.0,
+			CpfCnpj: "11111111111",
+			Type:    "shopkeeper",
 		}
 
 		mockValue := 200.0
@@ -75,24 +64,22 @@ func (suite *TransactionRepositoryTestSuite) TestTransfer() {
 	})
 
 	suite.Run("Should cancel transfer money", func() {
-		mockUserSender := &MockUser{
-			ID:       "123",
-			Name:     "mock2",
-			Email:    "mock2@mail.com",
-			cpfCnpj:  "00000000000",
-			Password: "mock123",
-			Balance:  1200.0,
-			Type:     "common",
+		mockUserSender := &entities.User{
+			ID:      "123",
+			Name:    "mock2",
+			Email:   "mock2@mail.com",
+			CpfCnpj: "00000000000",
+			Balance: 1200.0,
+			Type:    "common",
 		}
 
-		mockUserReceiver := &MockUser{
-			ID:       "456",
-			Name:     "mockShopkeepers2",
-			Email:    "mockShopkeepers2@mail.com",
-			cpfCnpj:  "11111111111",
-			Password: "mockShopkeepers123",
-			Balance:  15000.0,
-			Type:     "shopkeeper",
+		mockUserReceiver := &entities.User{
+			ID:      "456",
+			Name:    "mockShopkeepers2",
+			Email:   "mockShopkeepers2@mail.com",
+			CpfCnpj: "11111111111",
+			Balance: 15000.0,
+			Type:    "shopkeeper",
 		}
 
 		mockValue := 200.0

@@ -3,19 +3,10 @@ package usecase
 import (
 	"errors"
 
+	"github.com/luismarchio/transaction-api/internal/entities"
 	"github.com/luismarchio/transaction-api/internal/infra/repositories"
 	implementation "github.com/luismarchio/transaction-api/internal/infra/repositories/implementation"
 )
-
-type MockUser struct {
-	ID       string
-	Name     string
-	Email    string
-	Password string
-	Balance  float64
-	CpfCnpj  string
-	Type     string
-}
 
 type TransferMoneyUsecase struct {
 	TransactionRepository repositories.TransactionRepositoryInterface
@@ -30,8 +21,8 @@ func NewTransferMoneyUsecase(
 }
 
 func (u *TransferMoneyUsecase) Execute(
-	sender *MockUser,
-	receiver *MockUser,
+	sender *entities.User,
+	receiver *entities.User,
 	value float64,
 ) error {
 	// Validar Regras de Negocio

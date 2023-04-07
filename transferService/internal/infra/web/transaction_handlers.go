@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/luismarchio/transaction-api/internal/dtos"
+	"github.com/luismarchio/transaction-api/internal/entities"
 	usecase "github.com/luismarchio/transaction-api/internal/usecase"
 )
 
@@ -32,24 +33,22 @@ func (h *TransactionHandlers) TransferMoneyHandler(w http.ResponseWriter, r *htt
 		return
 	}
 
-	sender := &usecase.MockUser{
-		ID:       "12334",
-		Name:     "senderName3",
-		Email:    "senderEmail3@email.com",
-		Password: "senderPassword",
-		Balance:  1000,
-		CpfCnpj:  "123456733",
-		Type:     "common",
+	sender := &entities.User{
+		ID:      "12334",
+		Name:    "senderName3",
+		Email:   "senderEmail3@email.com",
+		Balance: 1000,
+		CpfCnpj: "123456733",
+		Type:    "common",
 	}
 
-	receiver := &usecase.MockUser{
-		ID:       "45676",
-		Name:     "receiverName2",
-		Email:    "receiverEmail2@email.com",
-		Password: "receiverPassword",
-		Balance:  100,
-		CpfCnpj:  "123456722",
-		Type:     "shopkeeper",
+	receiver := &entities.User{
+		ID:      "45676",
+		Name:    "receiverName2",
+		Email:   "receiverEmail2@email.com",
+		Balance: 100,
+		CpfCnpj: "123456722",
+		Type:    "shopkeeper",
 	}
 
 	mockValue := 200.0
@@ -78,24 +77,22 @@ func (h *TransactionHandlers) CancelTransferMoneyHandler(w http.ResponseWriter, 
 		return
 	}
 
-	sender := &usecase.MockUser{
-		ID:       "12334",
-		Name:     "senderName3",
-		Email:    "senderEmail3@email.com",
-		Password: "senderPassword",
-		Balance:  1000,
-		CpfCnpj:  "123456733",
-		Type:     "common",
+	sender := &entities.User{
+		ID:      "12334",
+		Name:    "senderName3",
+		Email:   "senderEmail3@email.com",
+		Balance: 1000,
+		CpfCnpj: "123456733",
+		Type:    "common",
 	}
 
-	receiver := &usecase.MockUser{
-		ID:       "45676",
-		Name:     "receiverName2",
-		Email:    "receiverEmail2@email.com",
-		Password: "receiverPassword",
-		Balance:  100,
-		CpfCnpj:  "123456722",
-		Type:     "shopkeeper",
+	receiver := &entities.User{
+		ID:      "45676",
+		Name:    "receiverName2",
+		Email:   "receiverEmail2@email.com",
+		Balance: 100,
+		CpfCnpj: "123456722",
+		Type:    "shopkeeper",
 	}
 
 	mockValue := 200.0

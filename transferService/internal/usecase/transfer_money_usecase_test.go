@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"testing"
 
+	"github.com/luismarchio/transaction-api/internal/entities"
 	implementation "github.com/luismarchio/transaction-api/internal/infra/repositories/implementation"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/suite"
@@ -33,24 +34,22 @@ func TestTransferMoneyUsecaseTestSuite(t *testing.T) {
 }
 
 func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseSuccess() {
-	sender := &MockUser{
-		ID:       "123",
-		Name:     "senderName",
-		Email:    "senderEmail@email.com",
-		Password: "senderPassword",
-		Balance:  1000,
-		CpfCnpj:  "123456789",
-		Type:     "common",
+	sender := &entities.User{
+		ID:      "123",
+		Name:    "senderName",
+		Email:   "senderEmail@email.com",
+		Balance: 1000,
+		CpfCnpj: "123456789",
+		Type:    "common",
 	}
 
-	receiver := &MockUser{
-		ID:       "456",
-		Name:     "receiverName",
-		Email:    "receiverEmail@email.com",
-		Password: "receiverPassword",
-		Balance:  100,
-		CpfCnpj:  "123456789",
-		Type:     "shopkeeper",
+	receiver := &entities.User{
+		ID:      "456",
+		Name:    "receiverName",
+		Email:   "receiverEmail@email.com",
+		Balance: 100,
+		CpfCnpj: "123456789",
+		Type:    "shopkeeper",
 	}
 
 	mockValue := 200.0
@@ -66,24 +65,22 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseSuccess() {
 func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorShopkeepersCannotPerformATransaction() {
 	respository := implementation.TransactionRepository{Db: suite.Db}
 
-	sender := &MockUser{
-		ID:       "678",
-		Name:     "senderName",
-		Email:    "senderEmail@email.com",
-		Password: "senderPassword",
-		Balance:  1000,
-		CpfCnpj:  "123456789",
-		Type:     "shopkeeper",
+	sender := &entities.User{
+		ID:      "678",
+		Name:    "senderName",
+		Email:   "senderEmail@email.com",
+		Balance: 1000,
+		CpfCnpj: "123456789",
+		Type:    "shopkeeper",
 	}
 
-	receiver := &MockUser{
-		ID:       "910",
-		Name:     "receiverName",
-		Email:    "receiverEmail@email.com",
-		Password: "receiverPassword",
-		Balance:  100,
-		CpfCnpj:  "123456789",
-		Type:     "common",
+	receiver := &entities.User{
+		ID:      "910",
+		Name:    "receiverName",
+		Email:   "receiverEmail@email.com",
+		Balance: 100,
+		CpfCnpj: "123456789",
+		Type:    "common",
 	}
 
 	mockValue := 200.0
@@ -99,24 +96,22 @@ func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorShopkee
 func (suite *TransferMoneyUsecaseTestSuite) TestTransferMoneyUsecaseErrorInsufficientBalanceToMakeThisTransfer() {
 	respository := implementation.TransactionRepository{Db: suite.Db}
 
-	sender := &MockUser{
-		ID:       "1011",
-		Name:     "senderName",
-		Email:    "senderEmail@email.com",
-		Password: "senderPassword",
-		Balance:  1000,
-		CpfCnpj:  "123456789",
-		Type:     "common",
+	sender := &entities.User{
+		ID:      "1011",
+		Name:    "senderName",
+		Email:   "senderEmail@email.com",
+		Balance: 1000,
+		CpfCnpj: "123456789",
+		Type:    "common",
 	}
 
-	receiver := &MockUser{
-		ID:       "1112",
-		Name:     "receiverName",
-		Email:    "receiverEmail@email.com",
-		Password: "receiverPassword",
-		Balance:  100,
-		CpfCnpj:  "123456789",
-		Type:     "shopkeeper",
+	receiver := &entities.User{
+		ID:      "1112",
+		Name:    "receiverName",
+		Email:   "receiverEmail@email.com",
+		Balance: 100,
+		CpfCnpj: "123456789",
+		Type:    "shopkeeper",
 	}
 
 	mockValue := 2000.0

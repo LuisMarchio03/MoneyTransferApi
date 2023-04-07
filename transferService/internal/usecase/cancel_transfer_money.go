@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"github.com/luismarchio/transaction-api/internal/entities"
 	"github.com/luismarchio/transaction-api/internal/infra/repositories"
 	implementation "github.com/luismarchio/transaction-api/internal/infra/repositories/implementation"
 )
@@ -18,8 +19,8 @@ func NewCancelTransferMoneyUsecase(
 }
 
 func (u *CancelTransferMoneyUsecase) Execute(
-	sender *MockUser,
-	receiver *MockUser,
+	sender *entities.User,
+	receiver *entities.User,
 	value float64,
 ) error {
 	err := u.TransactionRepository.CancelTransferMoney(
