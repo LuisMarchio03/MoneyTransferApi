@@ -2,6 +2,7 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/luismarchio/transaction-api/internal/dtos"
@@ -52,6 +53,10 @@ func (h *TransactionHandlers) TransferMoneyHandler(w http.ResponseWriter, r *htt
 	}
 
 	value := input.Value
+
+	fmt.Println("sender", sender)
+	fmt.Println("receiver", receiver)
+	fmt.Println("value", value)
 
 	err = h.TransferMoneyUsecase.Execute(
 		sender,

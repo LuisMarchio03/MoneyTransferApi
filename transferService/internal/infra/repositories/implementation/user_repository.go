@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/luismarchio/transaction-api/internal/entities"
@@ -45,7 +46,16 @@ func (r *UserRepository) FindUserById(id string) (*entities.User, error) {
 	}
 	defer stmt.Close()
 
-	err = stmt.QueryRow(id).Scan(&user.ID, &user.Name, &user.Balance, &user.Email, &user.Type, &user.CpfCnpj)
+	err = stmt.QueryRow(id).Scan(
+		&user.ID,
+		&user.Name,
+		&user.Balance,
+		&user.Email,
+		&user.Type,
+		&user.CpfCnpj,
+	)
+
+	fmt.Println("user dsdsa", user)
 
 	return &user, nil
 }
