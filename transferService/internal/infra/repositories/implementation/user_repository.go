@@ -39,20 +39,16 @@ func (r *UserRepository) Save(user *entities.User) error {
 
 func (r *UserRepository) FindUserById(id string) (*entities.User, error) {
 	var user entities.User
-	stmt, err := r.Db.Prepare("SELECT * FROM users WHERE id = $1")
+	stmt, err := r.Db.Prepare("SELECT id, name, balance, email, type, cpfCnpj FROM users WHERE id = $1")
 	if err != nil {
 		return nil, err
 	}
 	defer stmt.Close()
 
-	err = stmt.QueryRow(id).Scan(
-		&user.ID,
-		&user.Name,
-		&user.Balance,
-		&user.Email,
-		&user.Type,
-		&user.CpfCnpj,
-	)
+	err = stmt.QueryRow(id).Scan(&user.ID, &user.Name, &user.Balance, &user.Email, &user.Type, &user.CpfCnpj)
+	if err != nil {
+		return nil, err
+	}
 
 	fmt.Println("user dsdsa", user)
 

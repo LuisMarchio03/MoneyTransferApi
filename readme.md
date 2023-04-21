@@ -21,11 +21,11 @@ The following functionality has been implemented:
 
 **[X] TransferService -> handlers**
 
-**[] TransferService -> remove mockUser**
+**[x] TransferService -> remove mockUser**
 
-**[] TransferService -> Find User**
+**[x] TransferService -> Find User**
 
-**[] TransferService / WalletService -> Criar um User ID Compartilhado**
+**[x] TransferService / WalletService -> Criar um User ID Compartilhado**
 
 **[] TransferService -> producer update user to WalletService**
 
