@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/google/uuid"
 	"github.com/luismarchio/transaction-api/internal/entities"
 )
 
@@ -24,7 +23,7 @@ func (r *UserRepository) Save(user *entities.User) error {
 	defer stmt.Close()
 
 	_, err = stmt.Exec(
-		uuid.New().String(),
+		user.ID,
 		user.Name,
 		user.Balance,
 		user.Email,

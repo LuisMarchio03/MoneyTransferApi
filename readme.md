@@ -23,6 +23,10 @@ The following functionality has been implemented:
 
 **[] TransferService -> remove mockUser**
 
+**[] TransferService -> Find User**
+
+**[] TransferService / WalletService -> Criar um User ID Compartilhado**
+
 **[] TransferService -> producer update user to WalletService**
 
 **[] WalletService -> consumer rabbitMQ**

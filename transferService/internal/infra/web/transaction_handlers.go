@@ -54,6 +54,8 @@ func (h *TransactionHandlers) TransferMoneyHandler(w http.ResponseWriter, r *htt
 
 	value := input.Value
 
+	fmt.Println("input.Payer", input.Payer)
+	fmt.Println("input.Payee", input.Payee)
 	fmt.Println("sender", sender)
 	fmt.Println("receiver", receiver)
 	fmt.Println("value", value)

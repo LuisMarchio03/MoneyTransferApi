@@ -32,7 +32,9 @@ export class CreateUserLambda {
         cpfCnpj,
         type,
       });
+      const id = user.id;
       await this.producer.execute(JSON.stringify({
+        id,
         name,
         email,
         balance,

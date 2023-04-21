@@ -76,6 +76,7 @@ func main() {
 				if err != nil {
 					panic(err)
 				}
+				fmt.Println("Saving user DSDASD", user.ID)
 				err = usecase.Execute(&entities.User{
 					ID:      user.ID,
 					Name:    user.Name,
