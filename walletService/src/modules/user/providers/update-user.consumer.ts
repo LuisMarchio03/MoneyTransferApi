@@ -15,13 +15,13 @@ export class Consumer {
       channel.consume(this.queueName, async (msg) => {
         console.log(msg?.content.toString());
         const {
-          Payer,
-          Payee,
-          Value,
-          Type,
+          payer: Payer,
+          payee: Payee,
+          value: Value,
+          type: Type,
         } = JSON.parse(msg?.content.toString() || '{}');
 
-        if (!Payer || !Payee || !Value) {
+        if (!Payer || !Payee || !Value || !Type) {
           throw new Error('Invalid message');
         }
 

@@ -15,14 +15,15 @@ class Consumer {
             await channel.assertQueue(this.queueName);
             channel.consume(this.queueName, async (msg) => {
                 console.log(msg?.content.toString());
-                const { Payer, Payee, Value, } = JSON.parse(msg?.content.toString() || '{}');
-                if (!Payer || !Payee || !Value) {
+                const { payer: Payer, payee: Payee, value: Value, type: Type, } = JSON.parse(msg?.content.toString() || '{}');
+                if (!Payer || !Payee || !Value || !Type) {
                     throw new Error('Invalid message');
                 }
                 const result = {
                     Payer,
                     Payee,
                     Value,
+                    Type,
                 };
                 channel.ack(msg);
                 return result;

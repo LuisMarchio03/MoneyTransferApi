@@ -28,7 +28,15 @@ func NewTransactionHandlers(
 	}
 }
 
-func Publich(ch *amqp.Channel, tranferMoneyDTO *dtos.TransferMoneyDTO) error {
+type TransferMoneyPublichDTO struct {
+	ID    string  `json:"id"`
+	Value float64 `json:"value"`
+	Payer string  `json:"payer"`
+	Payee string  `json:"payee"`
+	Type  string  `json:"type"`
+}
+
+func Publich(ch *amqp.Channel, tranferMoneyDTO *TransferMoneyPublichDTO) error {
 	body, err := json.Marshal(tranferMoneyDTO) // tranforma em JSON
 	if err != nil {
 		return err
@@ -93,11 +101,12 @@ func (h *TransactionHandlers) TransferMoneyHandler(w http.ResponseWriter, r *htt
 	}
 	defer ch.Close()
 
-	Publich(ch, &dtos.TransferMoneyDTO{
+	Publich(ch, &TransferMoneyPublichDTO{
 		ID:    input.ID,
 		Value: input.Value,
 		Payer: input.Payer,
 		Payee: input.Payee,
+		Type:  "transfer",
 	})
 
 	w.WriteHeader(http.StatusOK)
@@ -141,6 +150,20 @@ func (h *TransactionHandlers) CancelTransferMoneyHandler(w http.ResponseWriter, 
 		w.Write([]byte(err.Error()))
 		return
 	}
+
+	ch, err := rabbitmq.OpenChannel()
+	if err != nil {
+		panic(err)
+	}
+	defer ch.Close()
+
+	Publich(ch, &TransferMoneyPublichDTO{
+		ID:    input.ID,
+		Value: input.Value,
+		Payer: input.Payer,
+		Payee: input.Payee,
+		Type:  "cancel",
+	})
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Cancel transfer successful"))

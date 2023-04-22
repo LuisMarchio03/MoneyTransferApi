@@ -9,6 +9,7 @@ export const handler = async(event: APIGatewayProxyEvent) => {
     const result = await consumer.execute();
 
     if (result.Type === "transfer") {
+      console.log("Transfer");
       await prisma.user.update({
         where: {
           id: result.Payer,
@@ -31,6 +32,7 @@ export const handler = async(event: APIGatewayProxyEvent) => {
         },
       });
     } else if (result.Type === "cancel") {
+      console.log("Cancel");
       await prisma.user.update({
         where: {
           id: result.Payer,
