@@ -19,6 +19,11 @@ functions:
       - httpApi:
           path: /users/{id}/wallet
           method: get
+  consumer:
+    handler: src/modules/user/lambdas/consumer.handler
+    events:
+      - schedule:
+          rate: rate(1 minute)
 
 custom:
   serverless-offline:
