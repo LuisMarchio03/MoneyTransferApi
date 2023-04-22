@@ -2,11 +2,12 @@ package web
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/luismarchio/transaction-api/internal/dtos"
 	usecase "github.com/luismarchio/transaction-api/internal/usecase"
+	"github.com/luismarchio/transaction-api/pkg/rabbitmq"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 type TransactionHandlers struct {
@@ -25,6 +26,27 @@ func NewTransactionHandlers(
 		CancelTransferMoneyUsecase: cancelTransferMoneyUsecase,
 		FindUserUsecase:            findUserUsecase,
 	}
+}
+
+func Publich(ch *amqp.Channel, tranferMoneyDTO *dtos.TransferMoneyDTO) error {
+	body, err := json.Marshal(tranferMoneyDTO) // tranforma em JSON
+	if err != nil {
+		return err
+	}
+	err = ch.Publish(
+		"transfer",
+		"",
+		false,
+		false,
+		amqp.Publishing{
+			ContentType: "application/json",
+			Body:        body,
+		},
+	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (h *TransactionHandlers) TransferMoneyHandler(w http.ResponseWriter, r *http.Request) {
@@ -54,12 +76,6 @@ func (h *TransactionHandlers) TransferMoneyHandler(w http.ResponseWriter, r *htt
 
 	value := input.Value
 
-	fmt.Println("input.Payer", input.Payer)
-	fmt.Println("input.Payee", input.Payee)
-	fmt.Println("sender", sender)
-	fmt.Println("receiver", receiver)
-	fmt.Println("value", value)
-
 	err = h.TransferMoneyUsecase.Execute(
 		sender,
 		receiver,
@@ -70,6 +86,19 @@ func (h *TransactionHandlers) TransferMoneyHandler(w http.ResponseWriter, r *htt
 		w.Write([]byte(err.Error()))
 		return
 	}
+
+	ch, err := rabbitmq.OpenChannel()
+	if err != nil {
+		panic(err)
+	}
+	defer ch.Close()
+
+	Publich(ch, &dtos.TransferMoneyDTO{
+		ID:    input.ID,
+		Value: input.Value,
+		Payer: input.Payer,
+		Payee: input.Payee,
+	})
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Transfer successful"))
