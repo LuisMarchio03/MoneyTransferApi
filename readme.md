@@ -27,9 +27,9 @@ The following functionality has been implemented:
 
 **[x] TransferService / WalletService -> Criar um User ID Compartilhado**
 
-**[] TransferService -> producer update user to WalletService**
+**[x] TransferService -> producer update user to WalletService**
 
-**[] WalletService -> consumer rabbitMQ**
+**[x] WalletService -> consumer rabbitMQ**
 
 **[] SendMessageService -> Create service to send message**
 
